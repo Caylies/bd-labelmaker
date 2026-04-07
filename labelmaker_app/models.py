@@ -3,20 +3,12 @@ from discord import ButtonStyle
 
 
 class ButtonStyleChoices(models.IntegerChoices):
-    PRIMARY = ButtonStyle.primary
-    SECONDARY = ButtonStyle.secondary
-    SUCCESS = ButtonStyle.success
-    DANGER = ButtonStyle.danger
-    LINK = ButtonStyle.link
-    PREMIUM = ButtonStyle.premium
-
-    # Aliases
-    BLURPLE = ButtonStyle.blurple
-    GREY = ButtonStyle.grey
-    GRAY = ButtonStyle.gray
-    GREEN = ButtonStyle.green
-    RED = ButtonStyle.red
-    URL = ButtonStyle.url
+    PRIMARY = ButtonStyle.primary.value
+    SECONDARY = ButtonStyle.secondary.value
+    SUCCESS = ButtonStyle.success.value
+    DANGER = ButtonStyle.danger.value
+    LINK = ButtonStyle.link.value
+    PREMIUM = ButtonStyle.premium.value
 
 
 class Label(models.Model):

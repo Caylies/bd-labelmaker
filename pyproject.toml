@@ -2,6 +2,16 @@
 name = "bd-labelmaker"
 version = "1.0.0"
 
-dependencies = [
-    # you can require a specific version of ballsdex here
+dependencies = [ ]
+
+description = "Monkeypatch BallSpawnView for fun and profit"
+license = "MIT"
+license-files = ["LICENSE"]
+
+authors = [
+    { name = "dormieriancitizen" }
 ]
+readme = "README.md"
+
+[project.urls]
+Homepage="https://github.com/dormieriancitizen/bd-labelmaker"
