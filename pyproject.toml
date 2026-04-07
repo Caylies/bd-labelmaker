@@ -1,5 +1,5 @@
 [project]
-name = "bd-labelmaker"
+name = "labelmaker_app"
 version = "1.0.0"
 
 dependencies = [ ]
@@ -12,4 +12,4 @@ authors = [ { name = "dormieriancitizen", email = "foo@bar.com"} ]
 readme = "README.md"
 
 [project.urls]
-Homepage="https://github.com/dormieriancitizen/bd-labelmaker"
+homepage="https://github.com/dormieriancitizen/bd-labelmaker"
