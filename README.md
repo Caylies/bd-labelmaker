@@ -1,6 +1,22 @@
-Demo for monkeypatching BallSpawnView
+# bd-labelmaker
+Add extra buttons to your BallSpawnView without any code changes.
 
-All the action is in `labelhook_app/labelhook_ext/__init__.py`
+This will likely not receive any support nor maintenance, but I'll take PRs.
 
-Following achieved with no changes outside of the package
-<img width="842" height="566" alt="image" src="https://github.com/user-attachments/assets/d061b9a2-1ccd-43a8-a1a1-8b3c90d5777d" />
+## Installation
+Add the following lines to your `config/extra.toml` (create it if it doesn't exist):
+```toml
+[[ballsdex.packages]]
+location = "git+https://github.com/dormieriancitizen/bd-labelmaker.git"
+path = "labelmaker_app"
+enabled = true
+
+```
+
+## Usage
+To use, first add something in the Labels panel, then run `@botping labelmaker_reloadconf` (or use your prefix).
+
+Subsequent spawns will have those buttons added. 
+
+## Notes
+If combined with another app that monkeypatches BallSpawnView, one of them will break. This is an essentially unavoidable side effect of allowing hot reloading.

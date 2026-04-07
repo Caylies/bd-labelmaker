@@ -8,9 +8,7 @@ description = "Monkeypatch BallSpawnView for fun and profit"
 license = "MIT"
 license-files = ["LICENSE"]
 
-authors = [
-    { name = "dormieriancitizen" }
-]
+authors = [ { name = "dormieriancitizen", email = "foo@bar.com"} ]
 readme = "README.md"
 
 [project.urls]

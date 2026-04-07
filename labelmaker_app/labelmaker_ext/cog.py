@@ -17,6 +17,9 @@ class LabelmakerCog(commands.Cog):
     def __init__(self, bot: "BallsDexBot"):
         self.bot = bot
 
+    async def cog_load(self):
+        await self.monkeypatch()
+
     async def monkeypatch(labelmaker_cog):  # pyright: ignore[reportSelfClsParameterName]
         labels = [label async for label in Label.objects.all()]
         cog = cast("CountryBallsSpawner", labelmaker_cog.bot.get_cog("CountryBallsSpawner"))
@@ -28,11 +31,18 @@ class LabelmakerCog(commands.Cog):
                 for label in labels:
 
                     async def callback(interaction: Interaction["BallsDexBot"]):
-                        await interaction.response.send_message(label.response)
+                        await interaction.response.send_message(label.response, ephemeral=label.ephemeral)
 
-                    btn = Button(label=label.label, style=cast("ButtonStyle", label.style))
+                    style = ButtonStyle(label.style)
+                    btn = Button(label=label.label, style=style)
                     btn.callback = callback
                     self.add_item(btn)
+
+            async def on_timeout(self):
+                for child in self.children:
+                    if isinstance(child, Button):
+                        child.disabled = True
+                await super().on_timeout()
 
         cog.countryball_cls = BallSpawnViewOverride
 
