@@ -6,6 +6,7 @@ from discord.ui import Button
 
 from ballsdex.packages.countryballs import CountryBallsSpawner
 from ballsdex.packages.countryballs.countryball import BallSpawnView
+from settings.models import settings
 from labelmaker_app.models import Label
 
 if TYPE_CHECKING:
@@ -31,12 +32,25 @@ class LabelmakerCog(commands.Cog):
                 for label in labels:
 
                     async def callback(interaction: Interaction["BallsDexBot"]):
-                        await interaction.response.send_message(label.response, ephemeral=label.ephemeral)
+                        await interaction.response.send_message(
+                            self.format_response(interaction, label.response), ephemeral=label.ephemeral
+                        )
 
                     style = ButtonStyle(label.style)
                     btn = Button(label=label.label, style=style)
                     btn.callback = callback
                     self.add_item(btn)
+
+            def format_response(self, interaction: Interaction["BallsDexBot"], response: str) -> str:
+                return response.format(
+                    user=interaction.user.mention,
+                    collectibles=settings.plural_collectible_name,
+                    collectible=settings.collectible_name,
+                    ball=self.model.country,
+                    rarity=self.model.rarity,
+                    emoji=self.bot.get_emoji(self.model.emoji_id),
+                    discord=settings.discord_invite,
+                )
 
             async def on_timeout(self):
                 for child in self.children:
