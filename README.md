@@ -27,10 +27,10 @@ Label responses support keywords, such as:
 - `{user}` - Mentions the user who interacted with a button.
 - `{collectible}` - The collectible name.
 - `{collectibles}` - A plural version of `$collectible`.
-- `{name}` - The countryball's name.
+- `{ball}` - The countryball's name.
 - `{rarity}` - The countryball's rarity.
 - `{emoji}` - The countryball's emoji.
-- `{discord}` - Your bot's discord server invite link.
+- `{discord}` - Your bot's Discord server invite link.
 
 ## Example
 
