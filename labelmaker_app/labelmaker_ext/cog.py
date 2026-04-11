@@ -4,10 +4,11 @@ from discord import ButtonStyle, Interaction
 from discord.ext import commands
 from discord.ui import Button
 
-from ballsdex.packages.countryballs import CountryBallsSpawner
-from ballsdex.packages.countryballs.countryball import BallSpawnView
-from settings.models import settings
+from ballsdex.packages.countryballs.cog import CountryBallsSpawner
+import ballsdex.packages.countryballs.cog as countryballs_cog
+import ballsdex.packages.countryballs.countryball as countryball
 from labelmaker_app.models import Label
+from settings.models import settings
 
 if TYPE_CHECKING:
     from ballsdex.core.bot import BallsDexBot
@@ -15,17 +16,20 @@ if TYPE_CHECKING:
 
 
 class LabelmakerCog(commands.Cog):
+    original: type[countryball.BallSpawnView]
+
     def __init__(self, bot: "BallsDexBot"):
         self.bot = bot
 
     async def cog_load(self):
+        self.original = countryball.BallSpawnView
         await self.monkeypatch()
 
     async def monkeypatch(labelmaker_cog):  # pyright: ignore[reportSelfClsParameterName]
         labels = [label async for label in Label.objects.all()]
         cog = cast("CountryBallsSpawner", labelmaker_cog.bot.get_cog("CountryBallsSpawner"))
 
-        class BallSpawnViewOverride(BallSpawnView):
+        class BallSpawnViewOverride(labelmaker_cog.original):
             def __init__(self, bot: "BallsDexBot", model: "Ball"):
                 super().__init__(bot, model)
 
@@ -59,6 +63,7 @@ class LabelmakerCog(commands.Cog):
                 await super().on_timeout()
 
         cog.countryball_cls = BallSpawnViewOverride
+        countryballs_cog.BallSpawnView = BallSpawnViewOverride
 
     @commands.command()
     @commands.is_owner()
